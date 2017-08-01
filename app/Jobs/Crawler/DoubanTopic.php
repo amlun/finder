@@ -39,8 +39,7 @@ class DoubanTopic extends Crawler
         $topic_content = trim($crawler->filterXPath('//div[@class="topic-content"]')->text());
         $image_links = $crawler->filterXPath('//div[@class="topic-figure cc"]/img')->extract('src');
 
-        $girl = Girl::firstOrNew(['link_md5' => md5($girl_link)], ['name' => $girl_name, 'link' => $girl_link, 'head' => $girl_head]);
-        $girl->save();
+        $girl = Girl::firstOrCreate(['link_md5' => md5($girl_link)], ['name' => $girl_name, 'link' => $girl_link, 'head' => $girl_head]);
 
         // 保存
         if (!empty($image_links)) {

@@ -33,6 +33,7 @@ abstract class Crawler extends Job
         $this->_client = new Client([
             'HTTP_USER_AGENT' => random_ua(),
         ]);
+        return $this;
     }
 
     public function handle()
@@ -42,7 +43,7 @@ abstract class Crawler extends Job
             $this->on_handle();
             $this->commit();
         } catch (AlreadyCrawlException $e) {
-            Log::notice('already crawl the page', ['link' => $this->_link]);
+            // Log::notice('already crawl the page', ['link' => $this->_link]);
             // pass to do nothing
         } catch (InvalidArgumentException $e) {
             Log::notice('invalid argument', ['link' => $this->_link]);

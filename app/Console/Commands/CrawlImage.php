@@ -8,12 +8,8 @@
 
 namespace App\Console\Commands;
 
-
-use App\Image;
-use App\Photo;
 use App\Jobs\Crawler;
 use Illuminate\Console\Command;
-use Log;
 
 class CrawlImage extends Command
 {
@@ -22,7 +18,7 @@ class CrawlImage extends Command
      *
      * @var string
      */
-    protected $signature = 'crawl:image {type}';
+    protected $signature = 'crawl:image {url}';
 
     /**
      * The console command description.
@@ -31,11 +27,6 @@ class CrawlImage extends Command
      */
     protected $description = 'Local the images or photos.';
 
-    private static $_map = [
-        'image' => Image::class,
-        'photo' => Photo::class,
-    ];
-
     /**
      * Execute the console command.
      *
@@ -43,26 +34,8 @@ class CrawlImage extends Command
      */
     public function handle()
     {
-        $type = $this->argument('type');
-        $cls = self::$_map[$type];
-        if (empty($cls)) {
-            throw new \InvalidArgumentException('invalid argument type');
-        }
-        $cls::chunk(200, function ($images) {
-            foreach ($images as $image) {
-                $this->_dispatch($image);
-            }
-        });
-    }
-
-    private function _dispatch($image)
-    {
-        if (!empty($image->link) && empty($image->path)) {
-            $local_path = Crawler::localImagePath($image->link);
-            dispatch(new Crawler\Image($image->link, $local_path));
-            Log::info('dispatch image job', ['link' => $image->link]);
-            $image->path = $local_path;
-            $image->save();
-        }
+        $url = $this->argument('url');
+        $local_path = Crawler::localImagePath($url);
+        dispatch(new Crawler\Image($url, $local_path));
     }
 }

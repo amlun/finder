@@ -9,6 +9,7 @@
 namespace App\Jobs\Crawler;
 
 use App\Jobs\Crawler;
+use Log;
 use Storage;
 
 class Image extends Crawler
@@ -30,9 +31,10 @@ class Image extends Crawler
     protected function on_handle()
     {
         try {
-            Storage::disk('public')->put($this->_path, file_get_contents($this->_link));
+            Storage::disk('public')->put($this->_path, file_get_contents($this->_link . '?time=' . time()));
+            Log::info('download image sucess', ['link' => $this->_link, 'path' => $this->_path]);
         } catch (\Exception $e) {
+            Log::error('download image fail', ['link' => $this->_link, 'path' => $this->_path]);
         }
     }
-
 }

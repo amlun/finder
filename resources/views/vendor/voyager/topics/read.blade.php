@@ -96,7 +96,7 @@
                     <div class="panel-body" style="display: flex;">
                         @foreach($dataTypeContent->images as $image)
                         <div style="float: left; display: inline; width: 200px; height: 300px; overflow: hidden; margin: 6px;">
-                            <a href="{{ $image->link }}" target="_blank"><img src="{{ Voyager::image($image->path) }}" style="width: 180px;"/></a>
+                            <a href="{{ Voyager::image($image->path) }}" target="_blank"><img src="{{ Voyager::image($image->path) }}" style="width: 180px;"/></a>
                         </div>
                         @endforeach
                     </div>

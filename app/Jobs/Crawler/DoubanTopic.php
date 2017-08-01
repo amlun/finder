@@ -59,8 +59,8 @@ class DoubanTopic extends Crawler
         }
 
         // 另外抓取这个girl的相册
-        dispatch(new DoubanAlbumList($girl_link . 'photos'));
-        Log::info('dispatch douban album list job', ['link' => $girl_link . 'photos']);
+//        dispatch(new DoubanAlbumList($girl_link . 'photos'));
+//        Log::info('dispatch douban album list job', ['link' => $girl_link . 'photos']);
 
         Log::debug('crawl douban topic success', ['link' => $this->_link]);
     }

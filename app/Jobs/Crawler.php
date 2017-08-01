@@ -48,20 +48,22 @@ abstract class Crawler extends Job
         } catch (InvalidArgumentException $e) {
             Log::notice('invalid argument', ['link' => $this->_link]);
             $this->commit();
+        } catch (\Exception $e) {
+            $this->rollback();
         }
         return true;
     }
 
     protected function begin()
     {
-        if ($this->_once && !Cache::add($this->_key(), true, 1)) {
+        if ($this->_once && !Cache::add($this->_key(), true, 5)) {
             throw new AlreadyCrawlException();
         }
     }
 
     protected function commit()
     {
-        $this->_once && Cache::forever($this->_key(), time());
+        $this->_once && Cache::put($this->_key(), time(), 24 * 60);
     }
 
     protected function rollback()

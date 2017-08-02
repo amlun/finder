@@ -19,7 +19,8 @@
     "laravel/framework": "5.4.*",
     "laravel/tinker": "~1.0",
     "tcg/voyager": "^0.11.14",
-    "fabpot/goutte": "^3.2"
+    "fabpot/goutte": "^3.2",
+    "intervention/imagecache": "~2.3"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",

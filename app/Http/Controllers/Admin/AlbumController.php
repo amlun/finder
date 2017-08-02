@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\VoyagerBreadController as BaseVoyagerBreadController;
 
-class TopicController extends BaseVoyagerBreadController
+class AlbumController extends BaseVoyagerBreadController
 {
     //
     public function destroy(Request $request, $id)
@@ -31,12 +31,12 @@ class TopicController extends BaseVoyagerBreadController
             $data->deleteAttributeTranslations($data->getTranslatableAttributes());
         }
 
-        // 删除话题相关的图片
-        foreach ($data->images as $image) {
-            $this->deleteFileIfExists($image->path);
-            $image->delete();
-
+        // 删除相册相关的照片
+        foreach ($data->photos AS $photo) {
+            $this->deleteFileIfExists($photo->path);
+            $photo->delete();
         }
+
         $data = $data->destroy($id)
             ? [
                 'message' => "Successfully Deleted {$dataType->display_name_singular}",

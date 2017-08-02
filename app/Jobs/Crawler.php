@@ -63,7 +63,7 @@ abstract class Crawler extends Job
 
     protected function commit()
     {
-        $this->_once && Cache::put($this->_key(), time(), 24 * 60);
+        $this->_once && Cache::put($this->_key(), time(), 7 * 24 * 60);
     }
 
     protected function rollback()

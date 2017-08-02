@@ -37,7 +37,7 @@
                                         <td>
                                             <?php $options = json_decode($row->details); ?>
                                             @if($row->type == 'image')
-                                                <img src="@if( strpos($data->{$row->field}, 'http://') === false && strpos($data->{$row->field}, 'https://') === false){{ Voyager::image( $data->{$row->field} ) }}@else{{ $data->{$row->field} }}@endif" style="width:100px">
+                                                <img src="{{ url( '/storage/resize/small/' . $data->{$row->field}) }}">
                                             @elseif($row->type == 'select_multiple')
                                                 @if(property_exists($options, 'relationship'))
 

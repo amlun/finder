@@ -96,7 +96,7 @@
                     <div class="panel-body" style="display: inline-block;width: auto;">
                         @foreach($dataTypeContent->photos as $photo)
                         <div style="float: left; display: inline; width: 200px; height: 300px; overflow: hidden; margin: 6px;">
-                            <a href="{{ url('/storage/'. $photo->path) }}" target="_blank"><img src="{{ url( '/storage/resize/medium/' . $photo->path) }}" style="width: 180px;"/></a>
+                            <a href="{{ url('/storage/'. $photo->path) }}" target="_blank"><img src="{{ url( '/storage/resize/medium/' . $photo->path) }}"/></a>
                         </div>
                         @endforeach
                     </div>

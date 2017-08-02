@@ -24,7 +24,6 @@ abstract class Crawler extends Job
 {
     protected $_client;
     protected $_link;
-    protected $_once = false;
 
     public function __construct($link)
     {
@@ -39,41 +38,33 @@ abstract class Crawler extends Job
     public function handle()
     {
         try {
-            $this->begin();
             $this->on_handle();
-            $this->commit();
         } catch (AlreadyCrawlException $e) {
-            // Log::notice('already crawl the page', ['link' => $this->_link]);
             // pass to do nothing
-        } catch (InvalidArgumentException $e) {
-            Log::notice('invalid argument', ['link' => $this->_link]);
-            $this->commit();
         } catch (\Exception $e) {
-            $this->rollback();
+            Log::error($e);
         }
         return true;
     }
 
-    protected function begin()
+    protected function lockLink($link)
     {
-        if ($this->_once && !Cache::add($this->_key(), true, 5)) {
-            throw new AlreadyCrawlException();
-        }
+        return Cache::add($this->lockKey($link), true, 5);
     }
 
-    protected function commit()
+    protected function unLockLink($link)
     {
-        $this->_once && Cache::put($this->_key(), time(), 7 * 24 * 60);
+        return Cache::forget($this->lockKey($link));
     }
 
-    protected function rollback()
+    protected function stashLink($link)
     {
-        $this->_once && Cache::forget($this->_key());
+        Cache::forever($this->lockKey($link), time());
     }
 
-    protected function _key()
+    protected function lockKey($link)
     {
-        return 'link:' . md5($this->_link);
+        return 'link:' . md5($link);
     }
 
     abstract protected function on_handle();

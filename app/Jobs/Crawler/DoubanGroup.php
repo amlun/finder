@@ -29,8 +29,10 @@ class DoubanGroup extends Crawler
         $links = $crawler->filterXPath('//td[@class="title"]/a')->extract('href');
         // TODO 如何寻找想要的帖子?
         foreach ($links as $link) {
-            dispatch(new DoubanTopic($link));
-            Log::info('dispatch douban topic job', ['link' => $link]);
+            if ($this->lockLink($link)) {
+                dispatch(new DoubanTopic($link));
+                Log::info('dispatch douban topic job', ['link' => $link]);
+            }
         }
 
         Log::debug('crawl douban group success', ['link' => $this->_link]);

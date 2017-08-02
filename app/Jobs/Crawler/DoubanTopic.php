@@ -24,8 +24,6 @@ use Log;
  */
 class DoubanTopic extends Crawler
 {
-    protected $_once = true;
-
     protected function on_handle()
     {
         Log::debug('crawl douban topic start', ['link' => $this->_link]);
@@ -46,21 +44,28 @@ class DoubanTopic extends Crawler
             // 保存文章信息
             $topic = Topic::firstOrNew(['link_md5' => md5($this->_link)], ['title' => $topic_title, 'content' => $topic_content, 'link' => $this->_link]);
             $topic = $girl->topics()->save($topic);
+            // 保存图片
             $images = [];
             foreach ($image_links as $image_link) {
+                if (!$this->lockLink($image_link)) {
+                    continue;
+                }
                 Log::info('crawl douban topic add image', ['link' => $image_link]);
                 $local_path = self::localImagePath($image_link);
                 dispatch(new ImageJob($image_link, $local_path));
                 Log::info('dispatch image job', ['link' => $image_link]);
                 $images[] = Image::firstOrNew(['link_md5' => md5($image_link)], ['link' => $image_link, 'path' => $local_path]);
             }
-            $topic->images()->saveMany($images);
+
+            if (!empty($images)) {
+                $topic->images()->saveMany($images);
+            }
         }
 
         // 另外抓取这个girl的相册
 //        dispatch(new DoubanAlbumList($girl_link . 'photos'));
 //        Log::info('dispatch douban album list job', ['link' => $girl_link . 'photos']);
-
+        $this->stashLink($this->_link);
         Log::debug('crawl douban topic success', ['link' => $this->_link]);
     }
 

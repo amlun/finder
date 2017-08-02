@@ -14,7 +14,6 @@ use Storage;
 
 class Image extends Crawler
 {
-    protected $_once = true;
     /**
      * local image path
      *
@@ -32,6 +31,7 @@ class Image extends Crawler
     {
         try {
             Storage::disk('public')->put($this->_path, file_get_contents($this->_link . '?time=' . time()));
+            $this->stashLink($this->_link);
             Log::info('download image sucess', ['link' => $this->_link, 'path' => $this->_path]);
         } catch (\Exception $e) {
             Log::error('download image fail', ['link' => $this->_link, 'path' => $this->_path]);

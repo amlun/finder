@@ -25,7 +25,7 @@ class DoubanAlbum extends Crawler
     protected function on_handle()
     {
         Log::debug('crawl douban album start', ['link' => $this->_link]);
-
+        
         // album
         $flag = strpos($this->_link, '?');
         $album_link = $this->_link;
@@ -38,13 +38,18 @@ class DoubanAlbum extends Crawler
         $photos = [];
         foreach ($photo_links AS $photo_link) {
             $photo_link = str_replace(['lthumb', 'webp'], ['large', 'jpg'], $photo_link);
+            if (!$this->lockLink($photo_link)) {
+                continue;
+            }
             $local_path = self::localImagePath($photo_link);
             dispatch(new ImageJob($photo_link, $local_path));
             Log::info('dispatch image job', ['link' => $photo_link]);
             $photos[] = Photo::firstOrNew(['link_md5' => md5($photo_link)], ['link' => $photo_link, 'path' => $local_path]);
             Log::info('crawl douban album add photo', ['link' => $photo_link]);
         }
-        $album->photos()->saveMany($photos);
+        if (!empty($photos)) {
+            $album->photos()->saveMany($photos);
+        }
         Log::debug('crawl douban album success', ['link' => $this->_link]);
 
         // next page

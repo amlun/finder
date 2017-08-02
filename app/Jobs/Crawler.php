@@ -42,7 +42,7 @@ abstract class Crawler extends Job
         } catch (AlreadyCrawlException $e) {
             // pass to do nothing
         } catch (\Exception $e) {
-            Log::error($e);
+            Log::error($e->getMessage());
         }
         return true;
     }

@@ -76,8 +76,8 @@ abstract class Crawler extends Job
     public static function localImagePath($image_link)
     {
         $ext = pathinfo($image_link, PATHINFO_EXTENSION);
-        $parts = array_slice(str_split($hash = sha1($image_link), 2), 0, 2);
-        return 'img/' . implode('/', $parts) . '/' . $hash . '.' . $ext;
+        $hash = sha1($image_link);
+        return 'images/' . date('Y-m-d') . '/' . $hash . '.' . $ext;
     }
 }
 

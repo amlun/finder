@@ -31,7 +31,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('crawl:douban group --url="https://www.douban.com/group/haixiuzu/"')->everyTenMinutes();
+        $schedule->command('crawl:douban group --url="https://www.douban.com/group/haixiuzu/"')->everyFiveMinutes();
 
         $schedule->command('crawl:douban group --url="https://www.douban.com/group/meituikong/"')->hourlyAt(5);
         $schedule->command('crawl:douban group --url="https://www.douban.com/group/bw0766/"')->hourlyAt(5);

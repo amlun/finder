@@ -31,7 +31,7 @@ class DoubanGroup extends Crawler
         foreach ($links as $link) {
             if ($this->lockLink($link)) {
                 dispatch(new DoubanTopic($link));
-                Log::info('dispatch douban topic job', ['link' => $link]);
+                Log::info('dispatch douban topic job', ['link' => $this->_link, 'topic_link' => $link]);
             }
         }
 

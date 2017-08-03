@@ -53,7 +53,7 @@ class DoubanTopic extends Crawler
                 Log::info('crawl douban topic add image', ['link' => $image_link]);
                 $local_path = self::localImagePath($image_link);
                 dispatch(new ImageJob($image_link, $local_path));
-                Log::info('dispatch image job', ['link' => $image_link]);
+                Log::info('dispatch image job', ['link' => $this->_link, 'image_link' => $image_link]);
                 $images[] = Image::firstOrNew(['link_md5' => md5($image_link)], ['link' => $image_link, 'path' => $local_path]);
             }
 

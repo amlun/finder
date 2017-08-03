@@ -8,8 +8,8 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\Crawler;
-use App\Photo;
+//use App\Jobs\Crawler;
+//use App\Photo;
 use Illuminate\Console\Command;
 
 class Test extends Command
@@ -36,12 +36,5 @@ class Test extends Command
      */
     public function handle()
     {
-        $photos = Photo::where('id', '>', 7210)->cursor();
-
-        foreach ($photos AS $photo) {
-            $photo->path = Crawler::localImagePath($photo->link);
-            $photo->save();
-            $this->comment('update photo ' . $photo->link);
-        }
     }
 }

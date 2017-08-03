@@ -8,6 +8,7 @@
 namespace App\Aip\Core;
 
 use App\Aip\Utils\AipSampleSigner;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
 /**
  * Aip Base 基类
@@ -208,7 +209,7 @@ class AipBase
      */
     private function getAuthFilePath()
     {
-        return dirname(__FILE__) . DIRECTORY_SEPARATOR . md5($this->apiKey);
+        return '/auth/' . md5($this->apiKey);
     }
 
     /**
@@ -224,7 +225,7 @@ class AipBase
 
         $obj['time'] = time();
         $obj['is_cloud_user'] = $this->isCloudUser;
-        @file_put_contents($this->getAuthFilePath(), json_encode($obj));
+        \Storage::disk('local')->put($this->getAuthFilePath(), json_encode($obj));
     }
 
     /**
@@ -233,16 +234,16 @@ class AipBase
      */
     private function readAuthObj()
     {
-        $content = @file_get_contents($this->getAuthFilePath());
-        if ($content !== false) {
+        try {
+            $content = \Storage::disk('local')->get($this->getAuthFilePath());
             $obj = json_decode($content, true);
             $this->isCloudUser = $obj['is_cloud_user'];
             $obj['is_read'] = true;
             if ($this->isCloudUser || $obj['time'] + $obj['expires_in'] - 30 > time()) {
                 return $obj;
             }
+        } catch (FileNotFoundException $exception) {
         }
-
         return null;
     }
 

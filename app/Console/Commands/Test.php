@@ -8,8 +8,8 @@
 
 namespace App\Console\Commands;
 
-//use App\Jobs\Crawler;
-//use App\Photo;
+use App\Jobs\Crawler;
+use App\Photo;
 use Illuminate\Console\Command;
 
 class Test extends Command
@@ -36,5 +36,8 @@ class Test extends Command
      */
     public function handle()
     {
+        $image = file_get_contents('https://img3.doubanio.com/view/group_topic/llarge/public/p87397423.jpg');
+        $result = app('AIP')->imageCensorComb($image, 'ocr,antiporn,disgust,watermark,quality');
+        dd($result);
     }
 }

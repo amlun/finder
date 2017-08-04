@@ -44,14 +44,11 @@ class Image extends Crawler
             if ($result['result_num'] > 0 && $result['result'][0]['gender'] == 'male') {
                 // 删除图片
                 $image->delete();
-                throw new \Exception('man found!');
+            } else {// 检测到人脸且是女性或没有人脸
+                Storage::disk('public')->put($this->_path, $image_body);
             }
-            // 检测到人脸且是女性
-
-
-            Storage::disk('public')->put($this->_path, $image_body);
             $this->stashLink($this->_link);
-            Log::info('download image sucess', ['link' => $this->_link, 'path' => $this->_path]);
+            Log::info('download image success', ['link' => $this->_link, 'path' => $this->_path]);
         } catch (ModelNotFoundException $e) {
             Log::error('image object not found', ['link' => $this->_link, 'path' => $this->_path]);
         } catch (\Exception $e) {

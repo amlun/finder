@@ -10,7 +10,7 @@ namespace App\Jobs\Crawler;
 
 use App\Album;
 use App\Jobs\Crawler;
-use App\Jobs\Crawler\Image as ImageJob;
+use App\Jobs\Crawler\Photo as PhotoJob;
 use App\Photo;
 use Log;
 
@@ -25,7 +25,7 @@ class DoubanAlbum extends Crawler
     protected function on_handle()
     {
         Log::debug('crawl douban album start', ['link' => $this->_link]);
-        
+
         // album
         $flag = strpos($this->_link, '?');
         $album_link = $this->_link;
@@ -35,20 +35,18 @@ class DoubanAlbum extends Crawler
         $album = Album::firstOrCreate(['link_md5' => md5($album_link)], ['link' => $album_link]);
         $crawler = $this->_client->request('GET', $this->_link);
         $photo_links = $crawler->filterXPath('//div[@class="photo_wrap"]/a/img')->extract('src');
-        $photos = [];
         foreach ($photo_links AS $photo_link) {
             $photo_link = str_replace(['lthumb', 'webp'], ['large', 'jpg'], $photo_link);
             if (!$this->lockLink($photo_link)) {
                 continue;
             }
             $local_path = self::localImagePath($photo_link);
-            dispatch(new ImageJob($photo_link, $local_path));
-            Log::info('dispatch image job', ['link' => $photo_link]);
-            $photos[] = Photo::firstOrNew(['link_md5' => md5($photo_link)], ['link' => $photo_link, 'path' => $local_path]);
-            Log::info('crawl douban album add photo', ['link' => $photo_link]);
-        }
-        if (!empty($photos)) {
-            $album->photos()->saveMany($photos);
+            Photo::firstOrCreate(
+                ['link_md5' => md5($photo_link)],
+                ['link' => $photo_link, 'path' => $local_path, 'album_id' => $album->id]
+            );
+            dispatch(new PhotoJob($photo_link, $local_path));
+            Log::info('dispatch photo job', ['link' => $this->_link, 'photo_link' => $photo_link]);
         }
         Log::debug('crawl douban album success', ['link' => $this->_link]);
 

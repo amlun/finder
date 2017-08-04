@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Photo extends Model
 {
-    protected $fillable = ['link', 'link_md5', 'path'];
+    protected $fillable = ['link', 'link_md5', 'path', 'album_id'];
 
     public function album()
     {

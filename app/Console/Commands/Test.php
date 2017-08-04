@@ -36,8 +36,13 @@ class Test extends Command
      */
     public function handle()
     {
-        $image = file_get_contents('https://img3.doubanio.com/view/group_topic/llarge/public/p87397423.jpg');
-        $result = app('AIP')->imageCensorComb($image, 'ocr,antiporn,disgust,watermark,quality');
+        $image = file_get_contents('https://img3.doubanio.com/view/group_topic/llarge/public/p87580482.jpg');
+        $options = [
+            'max_face_num' => 1,
+            'face_fields' => 'gender'
+        ];
+
+        $result = app('AipFace')->detect($image, $options);
         dd($result);
     }
 }

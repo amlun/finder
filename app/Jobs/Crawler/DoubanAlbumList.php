@@ -41,8 +41,10 @@ class DoubanAlbumList extends Crawler
             $title = trim($sub_crawler->filterXPath('//div[@class="pl2"]')->text());
             $link = $sub_crawler->filterXPath('//a[@class="album_photo"]')->attr('href');
             // 生成相册对象
-            $album = Album::firstOrNew(['link_md5' => md5($link)], ['cover' => $cover, 'title' => $title, 'link' => $link]);
-            $girl->albums()->save($album);
+            $album = Album::firstOrCreate(
+                ['link_md5' => md5($link)],
+                ['cover' => $cover, 'title' => $title, 'link' => $link, 'girl_id' => $girl->id]
+            );
             dispatch(new DoubanAlbum($link));
             Log::info('dispatch douban album job', ['link' => $link]);
         });

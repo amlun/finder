@@ -37,28 +37,30 @@ class DoubanTopic extends Crawler
         $topic_content = trim($crawler->filterXPath('//div[@class="topic-content"]')->text());
         $image_links = $crawler->filterXPath('//div[@class="topic-figure cc"]/img')->extract('src');
 
-        $girl = Girl::firstOrCreate(['link_md5' => md5($girl_link)], ['name' => $girl_name, 'link' => $girl_link, 'head' => $girl_head]);
-
         // 保存
+        $girl = Girl::firstOrCreate(
+            ['link_md5' => md5($girl_link)],
+            ['name' => $girl_name, 'link' => $girl_link, 'head' => $girl_head]
+        );
         if (!empty($image_links)) {
             // 保存文章信息
-            $topic = Topic::firstOrNew(['link_md5' => md5($this->_link)], ['title' => $topic_title, 'content' => $topic_content, 'link' => $this->_link]);
-            $topic = $girl->topics()->save($topic);
+            $topic = Topic::firstOrCreate(
+                ['link_md5' => md5($this->_link)],
+                ['title' => $topic_title, 'content' => $topic_content, 'link' => $this->_link, 'girl_id' => $girl->id]
+            );
             // 保存图片
             $images = [];
             foreach ($image_links as $image_link) {
                 if (!$this->lockLink($image_link)) {
                     continue;
                 }
-                Log::info('crawl douban topic add image', ['link' => $image_link]);
                 $local_path = self::localImagePath($image_link);
+                $images[] = Image::firstOrCreate(
+                    ['link_md5' => md5($image_link)],
+                    ['link' => $image_link, 'path' => $local_path, 'topic_id' => $topic->id]
+                );
                 dispatch(new ImageJob($image_link, $local_path));
                 Log::info('dispatch image job', ['link' => $this->_link, 'image_link' => $image_link]);
-                $images[] = Image::firstOrNew(['link_md5' => md5($image_link)], ['link' => $image_link, 'path' => $local_path]);
-            }
-
-            if (!empty($images)) {
-                $topic->images()->saveMany($images);
             }
         }
 

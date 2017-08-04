@@ -8,6 +8,7 @@
 
 namespace App\Providers;
 
+use App\Aip\AipFace;
 use App\Aip\AipImageCensor;
 use Illuminate\Support\ServiceProvider;
 
@@ -20,9 +21,14 @@ class AipServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->singleton('AIP', function () {
-            $config = config('aip');
+        $config = config('aip');
+        
+        $this->app->singleton('AipImageCensor', function () use ($config) {
             return new AipImageCensor($config['app_id'], $config['api_key'], $config['secret_key']);
+        });
+
+        $this->app->singleton('AipFace', function () use ($config) {
+            return new AipFace($config['app_id'], $config['api_key'], $config['secret_key']);
         });
     }
 }

@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Album extends Model
 {
-    protected $fillable = ['cover', 'title', 'link', 'link_md5'];
+    protected $fillable = ['cover', 'title', 'link', 'link_md5', 'girl_id'];
 
     public function girl()
     {

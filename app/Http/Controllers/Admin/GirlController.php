@@ -36,6 +36,6 @@ class GirlController extends BaseVoyagerBreadController
             'alert-type' => 'success',
         ];
 
-        return redirect()->route("voyager.{$dataType->slug}.index")->with($message);
+        return back()->with($message);
     }
 }

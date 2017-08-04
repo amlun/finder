@@ -43,6 +43,6 @@ class PhotoController extends BaseVoyagerBreadController
                 'alert-type' => 'error',
             ];
 
-        return redirect()->route("voyager.{$dataType->slug}.index")->with($data);
+        return back()->with($data);
     }
 }

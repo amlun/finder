@@ -15,7 +15,7 @@ class IndexController extends Controller
 {
     public function index(Request $request)
     {
-        $images = Image::paginate(16);
+        $images = Image::latest()->paginate(16);
         return view('welcome', ['images' => $images]);
     }
 }

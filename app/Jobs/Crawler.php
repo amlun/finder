@@ -59,7 +59,7 @@ abstract class Crawler extends Job
 
     protected function stashLink($link)
     {
-        Cache::forever($this->lockKey($link), time());
+        Cache::put($this->lockKey($link), time(), 30 * 24 * 60);
     }
 
     protected function lockKey($link)

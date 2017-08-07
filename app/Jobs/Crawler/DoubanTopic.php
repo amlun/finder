@@ -8,11 +8,13 @@
 
 namespace App\Jobs\Crawler;
 
+use App\Jobs\AlreadyCrawlException;
 use App\Jobs\Crawler;
 use App\Jobs\Crawler\Image as ImageJob;
 use App\Girl;
 use App\Image;
 use App\Topic;
+use Cache;
 use Log;
 
 /**
@@ -36,6 +38,12 @@ class DoubanTopic extends Crawler
         $topic_title = trim($crawler->filterXPath('//div[@id="content"]/h1')->text());
         $topic_content = trim($crawler->filterXPath('//div[@class="topic-content"]')->text());
         $image_links = $crawler->filterXPath('//div[@class="topic-figure cc"]/img')->extract('src');
+
+        // 内容去重
+        $unique = md5($girl_link . '/' . $topic_title . ':' . $topic_content);
+        if (!Cache::add($unique, time(), 5)) {
+            throw new AlreadyCrawlException('Same topic from the same girl');
+        }
 
         // 保存
         $girl = Girl::firstOrCreate(
@@ -64,6 +72,7 @@ class DoubanTopic extends Crawler
             }
         }
 
+        Cache::put($unique, time(), 30 * 24 * 60);
         // 另外抓取这个girl的相册
 //        dispatch(new DoubanAlbumList($girl_link . 'photos'));
 //        Log::info('dispatch douban album list job', ['link' => $girl_link . 'photos']);

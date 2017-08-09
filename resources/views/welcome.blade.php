@@ -18,23 +18,23 @@
     <div class="row">
         <ul>
             <a href="#" class="close"></a>
-            @foreach($photos as $photo)
+            @foreach($topics as $topic)
             <li>
-                <a href="#{{ $photo->id }}">
-                    <img src="{{ url( '/storage/resize/medium/' . $photo->path) }}" alt="">
+                <a href="#{{ $topic->id }}">
+                    <img src="{{ url( '/storage/resize/medium/' . $topic->cover) }}" alt="">
                 </a>
             </li>
             @endforeach
         </ul>
     </div> <!-- / row -->
-    @foreach($photos as $photo)
-    <div id="{{ $photo->id }}" class="port">
+    @foreach($topics as $topic)
+    <div id="{{ $topic->id }}" class="port">
         <div class="row">
             <div class="description">
-                <h1>标题</h1>
-                <p>说明</p>
+                <h1>{{ $topic->title }}</h1>
+                <p>{{ $topic->content }}</p>
             </div>
-            <img src="{{ url( '/storage/resize/large/' . $photo->path) }}" alt="">
+            <img src="{{ url( '/storage/resize/large/' . $topic->cover) }}" alt="">
         </div>
     </div> <!-- / row -->
     @endforeach
@@ -43,7 +43,7 @@
 
 <section class="page">
     <div class="row">
-        {{ $photos->links() }}
+        {{ $topics->links() }}
     </div>
 </section>
 

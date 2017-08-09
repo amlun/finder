@@ -8,14 +8,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Photo;
+use App\Topic;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
     public function index(Request $request)
     {
-        $photos = Photo::latest()->paginate(16);
-        return view('welcome', ['photos' => $photos]);
+        $topics = Topic::latest()->with('photos')->paginate(16);
+        return view('welcome', ['topics' => $topics]);
     }
 }

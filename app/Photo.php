@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Photo extends Model
 {
-    protected $fillable = ['title', 'url', 'url_md5', 'path'];
+    protected $fillable = ['title', 'url', 'url_md5', 'path', 'seq'];
 
     public function photoable()
     {

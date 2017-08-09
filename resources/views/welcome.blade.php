@@ -18,7 +18,7 @@
     <div class="row">
         <ul>
             <a href="#" class="close"></a>
-            @foreach($topics as $topic)
+            @foreach($topics as &$topic)
             <li>
                 <a href="#{{ $topic->id }}">
                     <img src="{{ url( '/storage/resize/medium/' . $topic->cover) }}" alt="">
@@ -28,11 +28,15 @@
         </ul>
     </div> <!-- / row -->
     @foreach($topics as $topic)
+        @php $topic_content = $topic->content @endphp
+        @foreach($topic->photos as $photo)
+        @php $topic_content = str_replace('<图片'.$photo->seq.'>', '<img src="'.url( '/storage/resize/large/' . $photo->path).'" alt=""/>', $topic_content) @endphp
+        @endforeach
     <div id="{{ $topic->id }}" class="port">
         <div class="row">
             <div class="description">
                 <h1>{{ $topic->title }}</h1>
-                <p>{{ $topic->content }}</p>
+                <p>{!! $topic_content !!}</p>
             </div>
             <img src="{{ url( '/storage/resize/large/' . $topic->cover) }}" alt="">
         </div>

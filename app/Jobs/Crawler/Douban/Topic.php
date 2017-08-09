@@ -76,7 +76,7 @@ class Topic extends Base
                 dispatch(new Photo($photo_url, $photo_path));
                 $photo_obj_arr[] = PhotoModel::firstOrNew(
                     ['url_md5' => md5($photo_url)],
-                    ['url' => $photo_url, 'path' => $photo_path, 'title' => $photo['title']]
+                    ['url' => $photo_url, 'path' => $photo_path, 'title' => $photo['title'], 'seq' => $photo['seq_id']]
                 );
             }
             $topic_obj->photos()->saveMany($photo_obj_arr);

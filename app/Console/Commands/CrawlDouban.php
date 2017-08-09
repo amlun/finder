@@ -44,8 +44,8 @@ class CrawlDouban extends Command
         $type = $this->argument('type');
         $cls = Arr::get($this->_types, $type);
         if (isset($cls)) {
-            $url = $this->option('url');
-            dispatch(new $cls($url));
+            $id = $this->argument('id');
+            dispatch(new $cls($id));
         }
     }
 }

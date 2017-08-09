@@ -8,10 +8,8 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\Crawler\DoubanAlbum;
-use App\Jobs\Crawler\DoubanAlbumList;
-use App\Jobs\Crawler\DoubanGroup;
-use App\Jobs\Crawler\DoubanTopic;
+use App\Jobs\Crawler\Douban\Group;
+use App\Jobs\Crawler\Douban\Topic;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 
@@ -22,7 +20,7 @@ class CrawlDouban extends Command
      *
      * @var string
      */
-    protected $signature = 'crawl:douban {type} {--url= : The url to crawl.}';
+    protected $signature = 'crawl:douban {type} {id}';
 
     /**
      * The console command description.
@@ -32,10 +30,8 @@ class CrawlDouban extends Command
     protected $description = 'Run the douban crawler';
 
     protected $_types = [
-        'group' => DoubanGroup::class,
-        'topic' => DoubanTopic::class,
-        'album_list' => DoubanAlbumList::class,
-        'album' => DoubanAlbum::class
+        'group' => Group::class,
+        'topic' => Topic::class,
     ];
 
     /**

@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Girl extends Model
 {
-    protected $fillable = ['name', 'head', 'link', 'link_md5'];
+    protected $fillable = ['name', 'avatar', 'url', 'url_md5'];
 
     public function topics()
     {

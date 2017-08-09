@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Album extends Model
 {
-    protected $fillable = ['cover', 'title', 'link', 'link_md5', 'girl_id'];
+    protected $fillable = ['girl_id', 'cover', 'title', 'url', 'url_md5'];
 
     public function girl()
     {
@@ -28,6 +28,6 @@ class Album extends Model
 
     public function photos()
     {
-        return $this->hasMany('App\Photo');
+        return $this->morphMany('App\Photo', 'photoable');
     }
 }

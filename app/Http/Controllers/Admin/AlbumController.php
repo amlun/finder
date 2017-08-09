@@ -37,6 +37,8 @@ class AlbumController extends BaseVoyagerBreadController
             $photo->delete();
         }
 
+        $this->deleteFileIfExists($data->cover);
+
         $data = $data->destroy($id)
             ? [
                 'message' => "Successfully Deleted {$dataType->display_name_singular}",

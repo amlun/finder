@@ -40,7 +40,7 @@
                         <div class="panel-body" style="padding-top:0;">
                             @if($row->type == "image")
                                 <img class="img-responsive"
-                                     src="{{ Voyager::image($dataTypeContent->{$row->field}) }}">
+                                     src="{{ url( '/storage/resize/medium/' . $dataTypeContent->{$row->field}) }}">
                             @elseif($row->type == 'select_dropdown' && property_exists($rowDetails, 'options') &&
                                     !empty($rowDetails->options->{$dataTypeContent->{$row->field}})
                             )
@@ -94,9 +94,9 @@
                     </div>
 
                     <div class="panel-body" style="display: flex;">
-                        @foreach($dataTypeContent->images as $image)
+                        @foreach($dataTypeContent->photos as $photo)
                         <div style="float: left; display: inline; width: 200px; height: 300px; overflow: hidden; margin: 6px;">
-                            <a href="{{ url('/storage/'. $image->path) }}" target="_blank"><img src="{{ url( '/storage/resize/medium/' . $image->path) }}"/></a>
+                            <a href="{{ url('/storage/'. $photo->path) }}" target="_blank"><img src="{{ url( '/storage/resize/medium/' . $photo->path) }}"/></a>
                         </div>
                         @endforeach
                     </div>

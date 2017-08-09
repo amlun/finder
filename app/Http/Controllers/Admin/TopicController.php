@@ -14,7 +14,6 @@ use TCG\Voyager\Http\Controllers\VoyagerBreadController as BaseVoyagerBreadContr
 
 class TopicController extends BaseVoyagerBreadController
 {
-    //
     public function destroy(Request $request, $id)
     {
         $slug = $this->getSlug($request);
@@ -32,9 +31,9 @@ class TopicController extends BaseVoyagerBreadController
         }
 
         // 删除话题相关的图片
-        foreach ($data->images as $image) {
-            $this->deleteFileIfExists($image->path);
-            $image->delete();
+        foreach ($data->photos as $photo) {
+            $this->deleteFileIfExists($photo->path);
+            $photo->delete();
 
         }
         $data = $data->destroy($id)

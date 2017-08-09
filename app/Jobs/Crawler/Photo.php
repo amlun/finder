@@ -2,39 +2,37 @@
 /**
  * Created by PhpStorm.
  * User: lunweiwei
- * Date: 2017/7/28
- * Time: 下午2:44
+ * Date: 2017/8/9
+ * Time: 下午3:10
  */
 
 namespace App\Jobs\Crawler;
 
-use App\Jobs\Crawler;
 use Log;
-use Storage;
 
-class Photo extends Crawler
+class Photo extends Job
 {
-    /**
-     * local image path
-     *
-     * @var string
-     */
-    protected $_path;
+    protected $url;
+    protected $path;
 
-    public function __construct($link, $path)
+    public function __construct($url, $path)
     {
-        parent::__construct($link);
-        $this->_path = $path;
+        $this->url = $url;
+        $this->path = $path;
     }
 
-    protected function on_handle()
+    public function handle()
     {
-        try {
-            Storage::disk('public')->put($this->_path, file_get_contents($this->_link . '?time=' . time()));
-            $this->stashLink($this->_link);
-            Log::info('download photo sucess', ['link' => $this->_link, 'path' => $this->_path]);
-        } catch (\Exception $e) {
-            Log::error('download photo fail', ['link' => $this->_link, 'path' => $this->_path]);
+        if ($this->lockUrl($this->url)) {
+            try {
+                $photo_body = file_get_contents($this->url . '?time=' . time());
+                \Storage::disk('public')->put($this->path, $photo_body);
+                $this->stashUrl($this->url);
+                Log::info('download image success', ['url' => $this->url, 'path' => $this->path]);
+            } catch (\Exception $e) {
+                Log::error('download image fail: ' . $e->getMessage(), ['url' => $this->url, 'path' => $this->path]);
+            }
         }
+
     }
 }

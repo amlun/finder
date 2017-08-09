@@ -16,12 +16,12 @@ class CreateAlbumsTable extends Migration
         Schema::create('albums', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('girl_id');  // girl id
-            $table->string('cover', 128);// album cover
+            $table->string('cover', 64); // album cover
             $table->string('title', 128);// album title
-            $table->string('link', 128); // album link url
-            $table->char('link_md5', 32);// album link url md5
+            $table->string('url', 128);  // album url
+            $table->char('url_md5', 32); // album url md5
             $table->index('girl_id');
-            $table->unique('link_md5');
+            $table->unique('url_md5');
             $table->timestamps();
         });
     }

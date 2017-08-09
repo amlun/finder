@@ -18,8 +18,6 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         CrawlDouban::class,
-        CrawlGirlAlbum::class,
-        CrawlImage::class,
         Test::class
     ];
 
@@ -31,29 +29,33 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('crawl:douban group --url="https://www.douban.com/group/haixiuzu/"')->everyFiveMinutes();
+        $schedule->command('crawl:douban group 433459')->everyFiveMinutes();
+        $schedule->command('crawl:douban group 516876')->everyThirtyMinutes();
+        $schedule->command('crawl:douban group 510760')->everyThirtyMinutes();
 
-        $schedule->command('crawl:douban group --url="https://www.douban.com/group/meituikong/"')->hourlyAt(5);
-        $schedule->command('crawl:douban group --url="https://www.douban.com/group/bw0766/"')->hourlyAt(5);
-        $schedule->command('crawl:douban group --url="https://www.douban.com/group/63686/"')->hourlyAt(10);
-        $schedule->command('crawl:douban group --url="https://www.douban.com/group/510760/"')->hourlyAt(10);
-        $schedule->command('crawl:douban group --url="https://www.douban.com/group/561425/"')->hourlyAt(15);
-        $schedule->command('crawl:douban group --url="https://www.douban.com/group/516876/"')->hourlyAt(15);
-        $schedule->command('crawl:douban group --url="https://www.douban.com/group/481977/"')->hourlyAt(20);
-        $schedule->command('crawl:douban group --url="https://www.douban.com/group/515085/"')->hourlyAt(20);
-        $schedule->command('crawl:douban group --url="https://www.douban.com/group/368701/"')->hourlyAt(25);
-        $schedule->command('crawl:douban group --url="https://www.douban.com/group/196602/"')->hourlyAt(25);
-        $schedule->command('crawl:douban group --url="https://www.douban.com/group/531651/"')->hourlyAt(30);
-        $schedule->command('crawl:douban group --url="https://www.douban.com/group/rouniu/"')->hourlyAt(30);
-        $schedule->command('crawl:douban group --url="https://www.douban.com/group/kaopulove/"')->hourlyAt(35);
-        $schedule->command('crawl:douban group --url="https://www.douban.com/group/407518/"')->hourlyAt(35);
-        $schedule->command('crawl:douban group --url="https://www.douban.com/group/503950/"')->hourlyAt(40);
-//        $schedule->command('crawl:douban group --url="https://www.douban.com/group/446091/"')->hourlyAt(40);
-        $schedule->command('crawl:douban group --url="https://www.douban.com/group/nanpengyou/"')->hourlyAt(45);
-        $schedule->command('crawl:douban group --url="https://www.douban.com/group/542175/"')->hourlyAt(45);
-        $schedule->command('crawl:douban group --url="https://www.douban.com/group/515085/"')->hourlyAt(50);
-        $schedule->command('crawl:douban group --url="https://www.douban.com/group/face2face/"')->hourlyAt(50);
-        $schedule->command('crawl:douban group --url="https://www.douban.com/group/294735/"')->hourlyAt(55);
+
+//        $schedule->command('crawl:douban group --url="https://www.douban.com/group/haixiuzu/"')->everyFiveMinutes();
+//
+//        $schedule->command('crawl:douban group --url="https://www.douban.com/group/meituikong/"')->hourlyAt(5);
+//        $schedule->command('crawl:douban group --url="https://www.douban.com/group/bw0766/"')->hourlyAt(5);
+//        $schedule->command('crawl:douban group 63686')->hourlyAt(10);
+//        $schedule->command('crawl:douban group 510760')->hourlyAt(10);
+//        $schedule->command('crawl:douban group 561425')->hourlyAt(15);
+//        $schedule->command('crawl:douban group 481977')->hourlyAt(20);
+//        $schedule->command('crawl:douban group 515085')->hourlyAt(20);
+//        $schedule->command('crawl:douban group --url="https://www.douban.com/group/368701/"')->hourlyAt(25);
+//        $schedule->command('crawl:douban group --url="https://www.douban.com/group/196602/"')->hourlyAt(25);
+//        $schedule->command('crawl:douban group --url="https://www.douban.com/group/531651/"')->hourlyAt(30);
+//        $schedule->command('crawl:douban group --url="https://www.douban.com/group/rouniu/"')->hourlyAt(30);
+//        $schedule->command('crawl:douban group --url="https://www.douban.com/group/kaopulove/"')->hourlyAt(35);
+//        $schedule->command('crawl:douban group --url="https://www.douban.com/group/407518/"')->hourlyAt(35);
+//        $schedule->command('crawl:douban group --url="https://www.douban.com/group/503950/"')->hourlyAt(40);
+////        $schedule->command('crawl:douban group --url="https://www.douban.com/group/446091/"')->hourlyAt(40);
+//        $schedule->command('crawl:douban group --url="https://www.douban.com/group/nanpengyou/"')->hourlyAt(45);
+//        $schedule->command('crawl:douban group --url="https://www.douban.com/group/542175/"')->hourlyAt(45);
+//        $schedule->command('crawl:douban group --url="https://www.douban.com/group/515085/"')->hourlyAt(50);
+//        $schedule->command('crawl:douban group --url="https://www.douban.com/group/face2face/"')->hourlyAt(50);
+//        $schedule->command('crawl:douban group --url="https://www.douban.com/group/294735/"')->hourlyAt(55);
     }
 
     /**

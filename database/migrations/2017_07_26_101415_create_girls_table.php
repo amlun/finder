@@ -15,11 +15,11 @@ class CreateGirlsTable extends Migration
     {
         Schema::create('girls', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 128); // girl name
-            $table->string('head', 128); // girl head image
-            $table->string('link', 128); // girl home page
-            $table->char('link_md5', 32);// girl home page link url md5
-            $table->unique('link_md5');
+            $table->string('name', 128);// girl name
+            $table->string('avatar',64);// girl avatar
+            $table->string('url', 128); // girl url
+            $table->char('url_md5', 32);// girl url md5
+            $table->unique('url_md5');
             $table->timestamps();
         });
     }

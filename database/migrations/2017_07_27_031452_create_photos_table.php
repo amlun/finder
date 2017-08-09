@@ -15,12 +15,14 @@ class CreatePhotosTable extends Migration
     {
         Schema::create('photos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('album_id'); // album id
-            $table->string('link', 128); // photo link url
-            $table->char('link_md5', 32);// photo link url md5
-            $table->char('path', 64);    // photo local path
-            $table->index('album_id');
-            $table->unique('link_md5');
+            $table->char('photoable_type', 16); // photo relation obj type
+            $table->integer('photoable_id');    // photo relation obj id
+            $table->string('title', 128);       // photo title
+            $table->string('url', 128);         // photo url
+            $table->char('url_md5', 32);        // photo url md5
+            $table->string('path', 64);         // photo local path
+            $table->index(['photoable_type', 'photoable_id'], 'photoable');
+            $table->unique('url_md5');
             $table->timestamps();
         });
     }

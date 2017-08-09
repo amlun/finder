@@ -14,15 +14,14 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * App\Photo
  *
- * @property-read \App\Album $album
  * @mixin \Eloquent
  */
 class Photo extends Model
 {
-    protected $fillable = ['link', 'link_md5', 'path', 'album_id'];
+    protected $fillable = ['title', 'url', 'url_md5', 'path'];
 
-    public function album()
+    public function photoable()
     {
-        return $this->belongsTo('App\Album');
+        return $this->morphTo();
     }
 }

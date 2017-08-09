@@ -17,11 +17,12 @@ class CreateTopicsTable extends Migration
             $table->increments('id');
             $table->integer('girl_id');
             $table->string('title', 128);// topic title
-            $table->string('link', 128); // topic page link url
+            $table->string('cover', 64); // topic cover
             $table->text('content');     // topic content
-            $table->char('link_md5', 32);// topic page link url md5
+            $table->string('url', 128);  // topic url
+            $table->char('url_md5', 32); // topic url md5
             $table->index('girl_id');
-            $table->unique('link_md5');
+            $table->unique('url_md5');
             $table->timestamps();
         });
     }

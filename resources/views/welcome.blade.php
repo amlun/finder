@@ -36,7 +36,7 @@
     <!-- Projects Row -->
     <div class="row">
         @foreach($photos as $photo)
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
             <div class="image-box">
                 <a href="#photo-{{ $photo->id }}">
                     <img src="{{ url( '/storage/resize/medium/' . $photo->path) }}" class="img-responsive" alt="">

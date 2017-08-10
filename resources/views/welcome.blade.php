@@ -38,7 +38,7 @@
         @foreach($photos as $photo)
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
             <div class="image-box">
-                <a href="#photo-{{ $photo->id }}" data-toggle="lightbox" data-gallery="example-gallery">
+                <a href="#photo-{{ $photo->id }}">
                     <img src="{{ url( '/storage/resize/medium/' . $photo->path) }}" class="img-responsive" alt="">
                 </a>
             </div>

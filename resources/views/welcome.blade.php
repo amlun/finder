@@ -27,7 +27,7 @@
     <div id="gallery" class="row">
         <a href="#" class="close"></a>
         @foreach($topics as &$topic)
-        <div class="col-lg-3 col-md-3 col-sm-3 .col-xs-6">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
             <div class="image-box">
                 <a href="#topic-{{ $topic->id }}" data-toggle="lightbox" data-gallery="example-gallery">
                     <img src="{{ url( '/storage/resize/medium/' . $topic->cover) }}" class="img-responsive" alt="">

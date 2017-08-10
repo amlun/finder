@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', ['uses' => 'IndexController@index', 'as' => 'create']);
+Route::get('/', ['uses' => 'IndexController@index']);
 
 
 Route::group(['prefix' => 'admin'], function () {

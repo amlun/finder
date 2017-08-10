@@ -1,6 +1,5 @@
-.info-header {
-    margin-top: 10px;
-    margin-bottom: 10px;
+body {
+    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
 .image-box {
@@ -12,4 +11,8 @@
     box-sizing: border-box;
     color: #707070;
     height: 100%;
+}
+
+footer {
+    margin: 50px 0;
 }

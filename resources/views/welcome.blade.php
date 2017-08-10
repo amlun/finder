@@ -20,29 +20,52 @@
     <link rel="stylesheet" href="{{ asset('css/index.css')}}">
 </head>
 <body>
+
+<!-- Page Content -->
 <div class="container">
-    <header class="text-center info-header">
-        <h2>Finder Girls <br> <span>[ Portfolio Gallery ]</span></h2>
-    </header>
-    <div id="gallery" class="row">
-        <a href="#" class="close"></a>
-        @foreach($topics as &$topic)
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Finder Girls
+                <small>[ Portfolio Gallery ]</small>
+            </h1>
+        </div>
+    </div>
+    <!-- /.row -->
+
+    <!-- Projects Row -->
+    <div class="row">
+        @foreach($photos as $photo)
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
             <div class="image-box">
-                <a href="#topic-{{ $topic->id }}" data-toggle="lightbox" data-gallery="example-gallery">
-                    <img src="{{ url( '/storage/resize/medium/' . $topic->cover) }}" class="img-responsive" alt="">
+                <a href="#photo-{{ $photo->id }}" data-toggle="lightbox" data-gallery="example-gallery">
+                    <img src="{{ url( '/storage/resize/medium/' . $photo->path) }}" class="img-responsive" alt="">
                 </a>
             </div>
         </div>
         @endforeach
-    </div> <!-- / row -->
+    </div>
+    <!-- / row -->
 
-    <div id="page" class="row">
+    <!-- Pagination -->
+    <div class="row">
         <div class="text-center">
-            {{ $topics->links() }}
+            {{ $photos->links() }}
         </div>
     </div>
+    <!-- /.row -->
+
+    <!-- Footer -->
+    <footer>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <p>Copyright &copy; AMLUN 2017</p>
+            </div>
+        </div>
+        <!-- /.row -->
+    </footer>
 </div>
+<!-- /.container -->
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>

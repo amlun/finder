@@ -9,7 +9,6 @@
 namespace App\Jobs;
 
 use App\Topic;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Log;
 use Storage;
 
@@ -31,17 +30,13 @@ class DeleteTopic extends Job
 
     public function handle()
     {
-        try {
-            if (Storage::disk('public')->exists($this->topic->cover)) {
-                Storage::disk('public')->delete($this->topic->cover);
-            }
-            foreach ($this->topic->photos as $photo) {
-                dispatch(new DeletePhoto($photo));
-            }
-            $this->topic->delete();
-            Log::info('delete photo successful', ['topic_id' => $this->topic->id]);
-        } catch (ModelNotFoundException $exception) {
-            Log::notice('photo is not found', ['topic_id' => $this->topic->id]);
+        if (Storage::disk('public')->exists($this->topic->cover)) {
+            Storage::disk('public')->delete($this->topic->cover);
         }
+        foreach ($this->topic->photos as $photo) {
+            dispatch(new DeletePhoto($photo));
+        }
+        $this->topic->delete();
+        Log::info('delete topic successful', ['topic_id' => $this->topic->id]);
     }
 }

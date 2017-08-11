@@ -9,7 +9,6 @@
 namespace App\Jobs;
 
 use App\Photo;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Log;
 use Storage;
 
@@ -31,14 +30,10 @@ class DeletePhoto extends Job
 
     public function handle()
     {
-        try {
-            if (Storage::disk('public')->exists($this->photo->path)) {
-                Storage::disk('public')->delete($this->photo->path);
-            }
-            $this->photo->delete();
-            Log::info('delete photo successful', ['photo_id' => $this->photo->id]);
-        } catch (ModelNotFoundException $exception) {
-            Log::notice('photo is not found', ['photo_id' => $this->photo->id]);
+        if (Storage::disk('public')->exists($this->photo->path)) {
+            Storage::disk('public')->delete($this->photo->path);
         }
+        $this->photo->delete();
+        Log::info('delete photo successful', ['photo_id' => $this->photo->id]);
     }
 }

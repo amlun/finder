@@ -25,13 +25,20 @@ class PhotoController extends BaseVoyagerBreadController
         // Check permission
         Voyager::canOrFail('delete_' . $dataType->name);
 
-        $this->dispatch(new DeletePhoto($id));
+        $data = call_user_func([$dataType->model_name, 'findOrFail'], $id);
 
-        $data = [
-            'message' => "Successfully Deleted Photo",
+        // Delete Translations, if present
+        if (is_bread_translatable($data)) {
+            $data->deleteAttributeTranslations($data->getTranslatableAttributes());
+        }
+
+        $this->dispatch(new DeletePhoto($data));
+
+        $message = [
+            'message' => "Successfully Deleted {$dataType->display_name_singular}",
             'alert-type' => 'success',
         ];
 
-        return back()->with($data);
+        return back()->with($message);
     }
 }

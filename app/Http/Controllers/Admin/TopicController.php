@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Jobs\DeleteTopic;
 use Illuminate\Http\Request;
 use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\VoyagerBreadController as BaseVoyagerBreadController;
@@ -30,25 +31,13 @@ class TopicController extends BaseVoyagerBreadController
             $data->deleteAttributeTranslations($data->getTranslatableAttributes());
         }
 
-        // 删除话题相关的图片
-        foreach ($data->photos as $photo) {
-            $this->deleteFileIfExists($photo->path);
-            $photo->delete();
+        $this->dispatch(new DeleteTopic($data));
 
-        }
+        $message = [
+            'message' => "Successfully Deleted {$dataType->display_name_singular}",
+            'alert-type' => 'success',
+        ];
 
-        $this->deleteFileIfExists($data->cover);
-
-        $data = $data->destroy($id)
-            ? [
-                'message' => "Successfully Deleted {$dataType->display_name_singular}",
-                'alert-type' => 'success',
-            ]
-            : [
-                'message' => "Sorry it appears there was a problem deleting this {$dataType->display_name_singular}",
-                'alert-type' => 'error',
-            ];
-
-        return back()->with($data);
+        return back()->with($message);
     }
 }

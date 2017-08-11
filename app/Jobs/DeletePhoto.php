@@ -19,24 +19,26 @@ use Storage;
  */
 class DeletePhoto extends Job
 {
-    protected $photo_id;
+    /**
+     * @var Photo
+     */
+    protected $photo;
 
-    public function __construct($photo_id)
+    public function __construct($photo)
     {
-        $this->photo_id = $photo_id;
+        $this->photo = $photo;
     }
 
     public function handle()
     {
         try {
-            $photo = Photo::findOrFail($this->photo_id);
-            if (Storage::disk('public')->exists($photo->path)) {
-                Storage::disk('public')->delete($photo->path);
+            if (Storage::disk('public')->exists($this->photo->path)) {
+                Storage::disk('public')->delete($this->photo->path);
             }
-            $photo->delete();
-            Log::info('delete photo successful', ['photo_id' => $this->photo_id]);
+            $this->photo->delete();
+            Log::info('delete photo successful', ['photo_id' => $this->photo->id]);
         } catch (ModelNotFoundException $exception) {
-            Log::notice('photo is not found', ['photo_id' => $this->photo_id]);
+            Log::notice('photo is not found', ['photo_id' => $this->photo->id]);
         }
     }
 }

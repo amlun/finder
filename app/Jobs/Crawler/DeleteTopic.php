@@ -8,7 +8,6 @@
 
 namespace App\Jobs;
 
-use App\Photo;
 use App\Topic;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Log;

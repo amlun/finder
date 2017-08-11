@@ -26,7 +26,7 @@
     <!-- Page Heading -->
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Finder Girls
+            <h1 class="page-header">Find Girls
                 <small>[ Portfolio Gallery ]</small>
             </h1>
         </div>

@@ -43,9 +43,13 @@ class Topic extends Base
             // 保存girl的基本信息
             $girl_obj = GirlModel::firstOrCreate(
                 ['url_md5' => $girl_url_md5],
-                ['name' => $author['name'], 'avatar' => $girl_avatar_path, 'url' => $author['url']]
+                ['name' => $author['name'], 'avatar' => $girl_avatar_path, 'url' => $author['url'], 'ban' => 0]
             );
         }
+        if ($girl_obj->ban != 0) {
+            $this->fallException($topic['url'], 'Banned girl!');
+        }
+
         $girl_id = $girl_obj->id;
 
         // topic

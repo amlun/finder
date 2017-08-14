@@ -19,6 +19,7 @@ class CreateGirlsTable extends Migration
             $table->string('avatar',64);// girl avatar
             $table->string('url', 128); // girl url
             $table->char('url_md5', 32);// girl url md5
+            $table->tinyInteger('ban'); // ban girl
             $table->unique('url_md5');
             $table->timestamps();
         });

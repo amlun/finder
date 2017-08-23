@@ -1,6 +1,6 @@
 <template>
     <div class="layout-padding row justify-center">
-        <div style="width:900px; max-width: 90vw; text-align: center;">
+        <div style="width:600px; max-width: 90vw; text-align: center;">
             <q-pagination v-model="page" :max="maxPage"/>
         </div>
     </div>

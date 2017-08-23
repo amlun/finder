@@ -3,7 +3,6 @@
         <div style="width: 500px; max-width: 90vw;">
             <p class="caption">Gallery</p>
             <q-gallery :src="gallery"/>
-            <q-gallery-carousel autoplay infinite fullscreen dots actions :src="gallery"/>
             <q-pagination v-model="page" :max="maxPage"/>
         </div>
     </div>
@@ -12,15 +11,13 @@
 <script>
     import {
         QPagination,
-        QGallery,
-        QGalleryCarousel
+        QGallery
     } from 'quasar-framework'
 
     export default {
         components: {
             QPagination,
-            QGallery,
-            QGalleryCarousel
+            QGallery
         },
         data() {
             return {

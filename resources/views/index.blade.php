@@ -8,6 +8,7 @@
 
 @section('content')
     <div class="layout">
-        <Gallery></Gallery>
+        <gallery></gallery>
+        <pagination></pagination>
     </div>
 @endsection

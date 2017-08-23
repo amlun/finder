@@ -19,7 +19,8 @@ Vue.use(Quasar);
  */
 
 Vue.component('example', require('./components/Example.vue'));
-Vue.component('Gallery', require('./components/Gallery.vue'));
+Vue.component('pagination', require('./components/Pagination.vue'));
+Vue.component('gallery', require('./components/Gallery.vue'));
 
 const app = new Vue({
     el: '#app'

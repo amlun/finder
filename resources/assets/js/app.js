@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -7,7 +6,11 @@
 
 require('./bootstrap');
 
+import Quasar from 'quasar-framework';
+
 window.Vue = require('vue');
+
+Vue.use(Quasar);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -16,6 +19,7 @@ window.Vue = require('vue');
  */
 
 Vue.component('example', require('./components/Example.vue'));
+Vue.component('Gallery', require('./components/Gallery.vue'));
 
 const app = new Vue({
     el: '#app'

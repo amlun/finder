@@ -9,8 +9,9 @@ window._ = require('lodash');
 
 try {
     window.$ = window.jQuery = require('jquery');
-
-    require('bootstrap-sass');
+    require('quasar-framework/dist/quasar.mat.css')
+    require('quasar-extras/fontawesome')
+    require('quasar-extras/material-icons')
 } catch (e) {}
 
 /**

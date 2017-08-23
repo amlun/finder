@@ -16,6 +16,8 @@
     "jquery": "^3.1.1",
     "laravel-mix": "^1.0",
     "lodash": "^4.17.4",
-    "vue": "^2.1.10"
+    "vue": "^npm i2.1.10",
+    "quasar-extras": "^0.0.7",
+    "quasar-framework": "^0.14.1"
   }
 }

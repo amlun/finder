@@ -17,7 +17,7 @@ class IndexController extends Controller
     {
         $photos = Photo::latest()->paginate(100);
         foreach ($photos as $photo) {
-            $photo_path[] = url('/storage/resize/large/' . $photo->path);
+            $photo_path[] = url('/storage/resize/medium/' . $photo->path);
         }
         return view('index', ['photos' => $photos, 'photo_path' => json_encode($photo_path)]);
     }

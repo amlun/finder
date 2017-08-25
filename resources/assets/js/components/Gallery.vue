@@ -2,7 +2,7 @@
     <div class="layout-padding row justify-center">
         <div style="width: auto; max-width: 90vw;">
             <p class="caption">Gallery</p>
-            <q-gallery :src="gallery"/>
+            <q-gallery :src="gallery" :width="width"/>
         </div>
     </div>
 </template>
@@ -18,7 +18,8 @@
         },
         data() {
             return {
-                gallery: photos
+                gallery: photos,
+                width: "240px"
             }
         }
     }
